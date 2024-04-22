@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "lib": ["es2020"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "es2022",
+      "strict": true,
+      "rootDir": ".",
+      "outDir": "./bin"
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "include": ["src/**/*.ts", "*.ts", "commands/init.ts"],
+    "exclude": ["node_modules"]
+}
+  
