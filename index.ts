@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import initCommand from './commands/init';
+import commands from './commands/index'
 
 const program: Command = new Command();
 
-const initPathOption: string = Object.keys(initCommand.options)[0]; 
-program.command(initCommand.commandName)
-.option(`-${initCommand.options[initPathOption].shourtCut}, --${initPathOption} <${initPathOption}>`, initCommand.options[initPathOption].description)
-.argument(`<${initCommand.arguments[0].argumentName}>`)
-.action(initCommand.action);
+for (const command in commands) {
+  commands[command].setupCommand(program, commands[command]);
+}
 
 program.parse(process.argv)
 

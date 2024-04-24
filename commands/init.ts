@@ -1,10 +1,11 @@
 import * as fs from 'fs';
 import CLICommand from '../modules/commands';
+import { Command } from 'commander';
 
-const action = (project: string, options : {path?: string | undefined}): void => {
+const action = (project: string, options : {path?: string}): void => {
     const dirUri: string = `${options?.path || '.'}/${project}`
     fs.access(dirUri, fs.constants.F_OK, (fileSystemAccesError) => {
-        
+
         if(!fileSystemAccesError) {
             console.log('directory is already exting!')
             return;
@@ -21,7 +22,17 @@ const action = (project: string, options : {path?: string | undefined}): void =>
     })
 }
 
-const initCommand: CLICommand<string> = {
+const setupCommand = (program: Command, initCommand: CLICommand): Command => {
+    const initPathOption: string = Object.keys(initCommand.options)[0]; 
+    program.command(initCommand.commandName)
+    .option(`-${initCommand.options[initPathOption].shourtCut}, --${initPathOption} <${initPathOption}>`, initCommand.options[initPathOption].description)
+    .argument(`<${initCommand.arguments[0].argumentName}>`)
+    .action(initCommand.action)
+
+    return program;
+}
+
+const initCommand: CLICommand = {
     action,
     commandName: 'init',
     arguments: [{
@@ -33,7 +44,8 @@ const initCommand: CLICommand<string> = {
             shourtCut: 'p',
             description: 'Path to create directory'
         } 
-    }
+    },
+    setupCommand
 };
 
 export default initCommand
