@@ -42,14 +42,11 @@ const action = (projectPath: string, version: string): void => {
         const data: Buffer = fs.readFileSync(pathToNextVersion);
         changesInVersion = JSON.parse(data as any);
     } catch (readFileError) {
-        console.log(`Couldn't find vaid ${pathToNextVersion} in project directory`);
+        console.log(`Couldn't find valid ${pathToNextVersion} in project directory`);
         return;
     }
     
-    console.log(changesInVersion)
-    const previousVersions: string[] = getProjectPreviousVersionsByOrder(projectPath);
-    console.log(previousVersions)
-    
+    const previousVersions: string[] = getProjectPreviousVersionsByOrder(projectPath);    
     
     projectVersionData.projectVersion = version;
     projectVersionData.changes = changesInVersion;
