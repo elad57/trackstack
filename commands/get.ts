@@ -1,32 +1,29 @@
 import * as fs from 'fs';
 import CLICommand from '../modules/commands';
 import { Command } from 'commander';
+import { getProjectPreviousVersionsByOrder } from "../utils/direcories-utils";
 
-const action = (project: string, options : {path?: string}): void => {}
+const action = (pathToProject: string): void => {
+    const projectVersions: string[] = getProjectPreviousVersionsByOrder(pathToProject);
+    projectVersions.forEach(version => console.log(version))
+}
 
-const setupCommand = (program: Command, initCommand: CLICommand): Command => {
-    const initPathOption: string = Object.keys(initCommand.options)[0]; 
-    program.command(initCommand.commandName)
-    .option(`-${initCommand.options[initPathOption].shourtCut}, --${initPathOption} <${initPathOption}>`, initCommand.options[initPathOption].description)
-    .argument(`<${initCommand.arguments[0].argumentName}>`)
-    .action(initCommand.action)
+const setupCommand = (program: Command, getCommand: CLICommand): Command => {
+    program.command(getCommand.commandName)
+    .argument(getCommand.arguments[0].argumentName, getCommand.arguments[0].description)
+    .action(getCommand.action);
 
     return program;
 }
 
 const initCommand: CLICommand = {
     action,
-    commandName: 'init',
+    commandName: 'get',
     arguments: [{
-        argumentName: 'project',
-        description: 'Initalize the project dir'
+        argumentName: 'pathToProject',
+        description: 'Path to project folder'
     }],
-    options: {
-        'path': {
-            shourtCut: 'p',
-            description: 'Path to create directory'
-        } 
-    },
+    options: {},
     setupCommand
 };
 

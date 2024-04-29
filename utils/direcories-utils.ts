@@ -5,7 +5,7 @@ const getProjectPreviousVersionsByOrder = (projectPath: string): string[] => {
     const projectFiles = fs.readdirSync(projectPath);
     const versionFiles = projectFiles.filter(isSemanticVersion)
 
-    return versionFiles.sort(stringSort);
+    return versionFiles.sort(stringSort).map((versionFile:string): string => versionFile.replace('.json', ''));
 };
 
 
