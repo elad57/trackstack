@@ -3,23 +3,10 @@ import * as path from 'path';
 import { Command } from 'commander';
 import CLICommand from '../modules/commands';
 import ProjectVersionData from '../modules/project-version-data'
+import { isSemanticVersion } from '../utils/string-utils'
+import { getProjectPreviousVersionsByOrder } from '../utils/direcories-utils'
 
 const NEXT_VERSION_FILE = 'nextVersion.json'
-
-const stringSort = (firstFile: string, secondFile: string): number => firstFile > secondFile ? -1 : 1
-
-const isSemanticVersion = (version: string): boolean => {
-    const regex = /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/;
-    return regex.test(version);
-}
-
-const getProjectPreviousVersionsByOrder = (projectPath: string): string[] => {    
-    const projectFiles = fs.readdirSync(projectPath);
-    const versionFiles = projectFiles.filter(isSemanticVersion)
-
-    return versionFiles.sort(stringSort);
-};
-
 
 const action = (projectPath: string, version: string): void => {
     if(!isSemanticVersion(version)) {
