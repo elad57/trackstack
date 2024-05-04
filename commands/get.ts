@@ -16,7 +16,7 @@ const setupCommand = (program: Command, getCommand: CLICommand): Command => {
     return program;
 }
 
-const initCommand: CLICommand = {
+const getCommand: CLICommand = {
     action,
     commandName: 'get',
     arguments: [{
@@ -27,4 +27,4 @@ const initCommand: CLICommand = {
     setupCommand
 };
 
-export default initCommand
+export default getCommand

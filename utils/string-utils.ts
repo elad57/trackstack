@@ -5,7 +5,17 @@ const isSemanticVersion = (version: string): boolean => {
     return regex.test(version);
 }
 
+const isString = (string: string): boolean => {
+    return typeof string === 'string';
+}
+
+const isTrueNotString = (param: string | boolean) : boolean => {
+    return !isString(param as string) && param as boolean;
+}
+
 export {
     stringSort,
-    isSemanticVersion
+    isSemanticVersion,
+    isString,
+    isTrueNotString
 }
