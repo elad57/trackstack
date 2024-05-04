@@ -1,3 +1,5 @@
+const READ_FILE_FORMAT = 'utf-8';
+
 const stringSort = (firstFile: string, secondFile: string): number => firstFile > secondFile ? -1 : 1
 
 const isSemanticVersion = (version: string): boolean => {
@@ -14,6 +16,7 @@ const isTrueNotString = (param: string | boolean) : boolean => {
 }
 
 export {
+    READ_FILE_FORMAT,
     stringSort,
     isSemanticVersion,
     isString,

@@ -7,10 +7,10 @@ import {
     microserviceVersionFileToMicroServiceDataMap, 
     optionToVersionFileName 
 } from './updateto-version-files-support/index'
+import { READ_FILE_FORMAT } from '../utils/string-utils'
 
-const READ_FILE_FORMAT = 'utf-8'
-
-const getMicroserviceVersionData = (pathToMicroserviceVersionFile?: string, versionFileOption?: string) : MicroserviceData => {
+const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string, versionFileOption?: string) 
+    : Promise<MicroserviceData> => {
     let versionFileName: string = optionToVersionFileName[versionFileOption ?? ''] ?? 'package.json';
     
     if(pathToMicroserviceVersionFile) {
@@ -18,7 +18,7 @@ const getMicroserviceVersionData = (pathToMicroserviceVersionFile?: string, vers
         versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1];  
     }
 
-    return microserviceVersionFileToMicroServiceDataMap[versionFileName](pathToMicroserviceVersionFile);
+    return await microserviceVersionFileToMicroServiceDataMap[versionFileName](pathToMicroserviceVersionFile);
 }
 
 const isNextVersionFileExist=(pathToNextVersionFile: string): boolean => {    
@@ -31,7 +31,7 @@ const isNextVersionFileExist=(pathToNextVersionFile: string): boolean => {
 } 
 
 
-const action = (pathToProject: string, options: {path?: string}):void => {
+const action = async (pathToProject: string, options: {path?: string}): Promise<void> => {
     const splittedPathToProject: string[] = pathToProject.split('\\');
     const projectName = splittedPathToProject[splittedPathToProject.length - 1];
     const pathNoProject = path.join(pathToProject, '../');
@@ -54,7 +54,7 @@ const action = (pathToProject: string, options: {path?: string}):void => {
     try {
         const nextVersionBuffer = fs.readFileSync(pathToNextVersionFile, READ_FILE_FORMAT);
         const nextVersionData: Record<string,string> = JSON.parse(nextVersionBuffer);
-        const microserviceVersionData = getMicroserviceVersionData(options.path);
+        const microserviceVersionData = await getMicroserviceVersionData(options.path);
 
         if(!microserviceVersionData.name) {
             console.log('No name mentioned on version file');
@@ -98,7 +98,7 @@ const updatetoCommand: CLICommand = {
         'path': {
             shourtCut: 'p',
             description: 'Path to version file of microservice'
-        } 
+        }
     },
     setupCommand
 };
