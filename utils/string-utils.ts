@@ -11,8 +11,8 @@ const isString = (string: string): boolean => {
     return typeof string === 'string';
 }
 
-const isTrueNotString = (param: string | boolean) : boolean => {
-    return !isString(param as string) && param as boolean;
+const isTrueAndNotString = (param: string | boolean) : boolean => {
+    return !isString(param as string) && (param as boolean);
 }
 
 export {
@@ -20,5 +20,5 @@ export {
     stringSort,
     isSemanticVersion,
     isString,
-    isTrueNotString
+    isTrueAndNotString
 }
