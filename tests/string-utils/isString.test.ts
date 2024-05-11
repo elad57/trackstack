@@ -1,4 +1,4 @@
-import { isString } from '../utils/string-utils';
+import { isString } from '../../src/utils/string-utils';
 
 describe('isString', () => {
     // Valid string inputs

@@ -1,4 +1,4 @@
-import { isTrueAndNotString } from "../utils/string-utils";
+import { isTrueAndNotString } from "../../src/utils/string-utils";
 
 describe('isTrueNotString', () => {
     // Valid inputs

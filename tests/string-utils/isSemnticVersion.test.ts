@@ -1,4 +1,4 @@
-import { isSemanticVersion } from '../utils/string-utils'
+import { isSemanticVersion } from '../../src/utils/string-utils'
 
 describe('isSemanticVersion', () => {
     // Valid semantic versions

@@ -5,12 +5,12 @@
     "moduleResolution": "node",
     "target": "es2022",
       "strict": true,
-      "rootDir": ".",
+      "rootDir": "./src",
       "outDir": "./bin"
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "include": ["src/**/*.ts", "*.ts", "commands/init.ts"],
+    "include": ["src/**/*.ts", "src/commands/init.ts"],
     "exclude": ["node_modules"]
 }
   

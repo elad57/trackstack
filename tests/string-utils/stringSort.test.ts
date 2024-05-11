@@ -1,4 +1,4 @@
-import { stringSort } from '../utils/string-utils';
+import { stringSort } from '../../src/utils/string-utils';
 
 describe('stringSort', () => {
     test('returns -1 when first char is greater than second char', () => {
