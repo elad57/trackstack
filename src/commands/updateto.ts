@@ -54,9 +54,16 @@ const action = async (pathToProject: string, options: {path?: string}): Promise<
     try {
         const nextVersionBuffer = fs.readFileSync(pathToNextVersionFile, READ_FILE_FORMAT);
         const nextVersionData: Record<string,string> = JSON.parse(nextVersionBuffer);
-        const microserviceVersionData = await getMicroserviceVersionData(options.path);
+        
+        let microserviceVersionData: MicroserviceData;
+        try {
+            microserviceVersionData = await getMicroserviceVersionData(options.path);
+        } catch (getMicroServiceVersionDataError) {
+            console.log(getMicroServiceVersionDataError);
+            return;
+        }
 
-        if(!microserviceVersionData.name) {
+        if(!microserviceVersionData!.name) {
             console.log('No name mentioned on version file');
             return;
         }

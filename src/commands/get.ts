@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import CLICommand from '../modules/commands';
 import { Command } from 'commander';
 import { getProjectPreviousVersionsByOrder } from "../utils/direcories-utils";
