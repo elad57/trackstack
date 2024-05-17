@@ -14,7 +14,7 @@ const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string
     let versionFileName: string = optionToVersionFileName[versionFileOption ?? ''] ?? 'package.json';
     
     if(pathToMicroserviceVersionFile) {
-        const splittedPathToVersionFile: string[] = pathToMicroserviceVersionFile.split('\\');
+        const splittedPathToVersionFile: string[] = pathToMicroserviceVersionFile.split(/[\\/]/);
         versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1];  
     }
 
@@ -32,20 +32,20 @@ const isNextVersionFileExist=(pathToNextVersionFile: string): boolean => {
 
 
 const action = async (pathToProject: string, options: {path?: string}): Promise<void> => {
-    const splittedPathToProject: string[] = pathToProject.split('\\');
+    const splittedPathToProject: string[] = pathToProject.split(/[\\/]/);
     const projectName = splittedPathToProject[splittedPathToProject.length - 1];
     const pathNoProject = path.join(pathToProject, '../');
     
     try {
         fs.accessSync(pathToProject, fs.constants.F_OK);
     } catch (fileSystemAccesError) {
-        console.log(`Project not initalize!, try using trackstack init -p ${pathNoProject} ${projectName}`);
+        console.log(`Project not initialized!, try using trackstack init -p ${pathNoProject.replace(new RegExp(/\\/g), `/`)} ${projectName}`);
         return;
     }
 
     const nextVersionFile: string = 'nextVersion.json'
     const pathToNextVersionFile =`${pathToProject}${pathToProject[pathToProject.length -1] == '\\' ? 
-    nextVersionFile : `\\${nextVersionFile}`}`; 
+    nextVersionFile : `/${nextVersionFile}`}`; 
     
     if(!isNextVersionFileExist(pathToNextVersionFile)) {
         fs.writeFileSync(pathToNextVersionFile, JSON.stringify({}));
@@ -70,14 +70,14 @@ const action = async (pathToProject: string, options: {path?: string}): Promise<
 
         if(!microserviceVersionData.version) {
             console.log('No version mentioned on version file');
-            return
+            return;
         }
 
         nextVersionData[microserviceVersionData.name] = microserviceVersionData.version
         fs.writeFileSync(pathToNextVersionFile, JSON.stringify(nextVersionData));
         console.log(`added ${microserviceVersionData.name}:${microserviceVersionData.version} to next version!`)
     } catch (nextVersionReadError) {
-        console.log(`unable to read nextVersion.json in ${pathToNextVersionFile}`);
+        console.log(`unable to read nextVersion.json in ${pathToNextVersionFile.replace(/[\\/]/g, '/')}`);
         return;
     }
     

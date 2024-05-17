@@ -9,7 +9,6 @@ const getPomXmlData = async (pathToPomXml: string = './pom.xml'): Promise<Micros
     try {
         pomXml = fs.readFileSync(pathToPomXml, READ_FILE_FORMAT)
     } catch(errorReadingFile) {
-        console.log('throe')
         throw `cannot read file ${pathToPomXml}`
     }
 
