@@ -17,7 +17,7 @@ const setupCommand = (program: Command, getCommand: CLICommand): Command => {
 
 const getCommand: CLICommand = {
     action,
-    commandName: 'get',
+    commandName: 'getVersions',
     arguments: [{
         argumentName: 'pathToProject',
         description: 'Path to project folder'
