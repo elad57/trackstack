@@ -9,16 +9,25 @@ import {
 } from './updateto-version-files-support/index'
 import { READ_FILE_FORMAT } from '../utils/string-utils'
 
+type getDataVersionFileFunc = (pathToMicroserviceVersionFile: string) => Promise<MicroserviceData>;
+
+const getNoConstantNameVersionFileName = (versionFileName: string): string => {
+    const splittedVersionfileName: string[] = versionFileName.split('.');
+    return splittedVersionfileName[splittedVersionfileName.length -1];
+}
+
 const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string, versionFileOption?: string) 
     : Promise<MicroserviceData> => {
     let versionFileName: string = optionToVersionFileName[versionFileOption ?? ''] ?? 'package.json';
     
     if(pathToMicroserviceVersionFile) {
         const splittedPathToVersionFile: string[] = pathToMicroserviceVersionFile.split(/[\\/]/);
-        versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1];  
+        versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1];        
     }
 
-    return await microserviceVersionFileToMicroServiceDataMap[versionFileName](pathToMicroserviceVersionFile);
+    const getDataFromVersionFile: getDataVersionFileFunc = microserviceVersionFileToMicroServiceDataMap[versionFileName] || microserviceVersionFileToMicroServiceDataMap[getNoConstantNameVersionFileName(versionFileName)];
+    
+    return await getDataFromVersionFile(pathToMicroserviceVersionFile!);
 }
 
 const isNextVersionFileExist=(pathToNextVersionFile: string): boolean => {    

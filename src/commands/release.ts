@@ -44,9 +44,7 @@ const action = (projectPath: string, version: string): void => {
     } else {
         const data: Buffer = fs.readFileSync(`${projectPath}/${previousVersions[0]}.json`);
         const previousVersion: ProjectVersionData = JSON.parse(data as any);
-        
-        // projectVersionData = previousVersion;
-        
+                
         projectVersionData.allMicroservices = {
             ...projectVersionData.allMicroservices,
             ...changesInVersion

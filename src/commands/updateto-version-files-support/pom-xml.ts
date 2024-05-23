@@ -18,7 +18,7 @@ const getPomXmlData = async (pathToPomXml: string = './pom.xml'): Promise<Micros
     const [name] = artifactId;
     const [version] = versionArray
 
-    
+
     return {
         version,
         name
