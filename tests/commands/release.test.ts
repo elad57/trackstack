@@ -7,7 +7,7 @@ import ProjectVersionData from '../../src/modules/project-version-data';
 jest.mock('fs');
 jest.mock('../../src/utils/direcories-utils');
 
-describe('action', () => {
+describe('release', () => {
   const projectPath = '/path/to/project';
   const version = '1.0.0';
   const NEXT_VERSION_FILE = 'nextVersion.json';
