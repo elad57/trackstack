@@ -7,17 +7,17 @@ const action = (project: string, options : {path?: string}): void => {
     fs.access(dirUri, fs.constants.F_OK, (fileSystemAccesError) => {
 
         if(!fileSystemAccesError) {
-            console.log('directory is already exting!')
+            console.log('directory is already existing!')
             return;
         }
 
         fs.mkdir(dirUri, (fileSysemMakeDirError) => {
             if(fileSysemMakeDirError) {
-                console.log(`Error accured! ${fileSysemMakeDirError.message}`);
+                console.log(`Error occurred! ${fileSysemMakeDirError.message}`);
                 return;
             } 
 
-            console.log('project initalize succssefuly!');
+            console.log('project initialized successfully!');
         })
     })
 }

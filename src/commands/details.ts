@@ -2,14 +2,14 @@ import * as fs from 'fs';
 import { Command } from 'commander';
 import CLICommand from '../modules/commands';
 import ProjectVersionData from '../modules/project-version-data';
-import { isString, isTrueNotString } from '../utils/string-utils';
+import { isTrueAndNotString } from '../utils/string-utils';
 
 const action = (pathToProject: string, version: string, options: Record<string, string>): void => {
-    const isChanges: boolean = isTrueNotString(options[detailsCommand.options['changes'].shourtCut]);
-    const isAllServices: boolean = isTrueNotString(options[detailsCommand.options['allServices'].shourtCut]);
+    const isChanges: boolean = isTrueAndNotString(options[detailsCommand.options['changes'].shourtCut]);
+    const isAllServices: boolean = isTrueAndNotString(options[detailsCommand.options['allServices'].shourtCut]);
 
     if (isChanges && isAllServices) {
-        console.log('Cannot show only changes an all services. please use just one flag');
+        console.log('Cannot show only changes and all services. please use just one flag');
         return;
     }
 

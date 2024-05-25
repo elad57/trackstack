@@ -10,7 +10,7 @@ const NEXT_VERSION_FILE = 'nextVersion.json'
 
 const action = (projectPath: string, version: string): void => {
     if(!isSemanticVersion(version)) {
-        console.log(`Use sementic version for new release!`)
+        console.log(`Use semantic version for new release!`)
         return;
     }
 
@@ -23,13 +23,13 @@ const action = (projectPath: string, version: string): void => {
         previousVersions:[]    
     }
     
-    const pathToNextVersion: string = path.join(projectPath, NEXT_VERSION_FILE);
+    const pathToNextVersionFile: string = path.join(projectPath, NEXT_VERSION_FILE);
     
     try {
-        const data: Buffer = fs.readFileSync(pathToNextVersion);
+        const data: Buffer = fs.readFileSync(pathToNextVersionFile);
         changesInVersion = JSON.parse(data as any);
     } catch (readFileError) {
-        console.log(`Couldn't find valid ${pathToNextVersion} in project directory`);
+        console.log(`Couldn't find valid ${pathToNextVersionFile} in project directory`);
         return;
     }
     
@@ -44,20 +44,18 @@ const action = (projectPath: string, version: string): void => {
     } else {
         const data: Buffer = fs.readFileSync(`${projectPath}/${previousVersions[0]}.json`);
         const previousVersion: ProjectVersionData = JSON.parse(data as any);
-        
-        projectVersionData = previousVersion;
-        
+                
         projectVersionData.allMicroservices = {
             ...projectVersionData.allMicroservices,
             ...changesInVersion
         }
 
-        projectVersionData.previousVersions.unshift(version);
+        projectVersionData.previousVersions = [version, ...previousVersion.previousVersions];
     }
 
     fs.writeFileSync(`${projectPath}/${version}.json`, JSON.stringify(projectVersionData));
 
-    fs.unlinkSync(pathToNextVersion)
+    fs.unlinkSync(pathToNextVersionFile)
     
     console.log(`Release version ${version}!!`)
 }

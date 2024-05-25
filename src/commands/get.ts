@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import CLICommand from '../modules/commands';
 import { Command } from 'commander';
 import { getProjectPreviousVersionsByOrder } from "../utils/direcories-utils";
@@ -18,7 +17,7 @@ const setupCommand = (program: Command, getCommand: CLICommand): Command => {
 
 const getCommand: CLICommand = {
     action,
-    commandName: 'get',
+    commandName: 'getVersions',
     arguments: [{
         argumentName: 'pathToProject',
         description: 'Path to project folder'

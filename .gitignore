@@ -131,3 +131,6 @@ dist
 
 # compiled files
 bin/
+
+# debuggers
+.vscode/
