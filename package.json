@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "npx jest",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "trackstack",
     "dev": "npm run build && npm link && npm run start"
   },
