@@ -16,9 +16,9 @@ const getNoConstantNameVersionFileName = (versionFileName: string): string => {
     return splittedVersionfileName[splittedVersionfileName.length -1];
 }
 
-const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string, versionFileOption?: string) 
+const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string) 
     : Promise<MicroserviceData> => {
-    let versionFileName: string = optionToVersionFileName[versionFileOption ?? ''] ?? 'package.json';
+    let versionFileName: string = 'package.json';
     
     if(pathToMicroserviceVersionFile) {
         const splittedPathToVersionFile: string[] = pathToMicroserviceVersionFile.split(/[\\/]/);
