@@ -1,5 +1,5 @@
 {
-  "name": "trackstack",
+  "name": "trackstack-cli",
   "version": "0.0.1-1",
   "description": "version control cli",
   "main": "index.ts",
