@@ -43,6 +43,7 @@ describe('action', () => {
       changes: changesInVersion,
       allMicroservices: changesInVersion,
       previousVersions: [version],
+      publishTimestamp: 'timeStamp'
     };
     
     (fs.accessSync as jest.Mock).mockImplementation(() => {});
@@ -63,6 +64,7 @@ describe('action', () => {
       changes: changesInVersion,
       allMicroservices: changesInVersion,
       previousVersions: [version],
+      publishTimestamp: 'timestamp'
     };
     
     (fs.accessSync as jest.Mock).mockImplementation(() => {});
@@ -83,6 +85,7 @@ describe('action', () => {
       changes: changesInVersion,
       allMicroservices: changesInVersion,
       previousVersions: [version],
+      publishTimestamp: 'timestamp'
     };
     
     (fs.accessSync as jest.Mock).mockImplementation(() => {});

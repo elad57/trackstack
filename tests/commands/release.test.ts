@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as dayjs from 'dayjs';
 import command from '../../src/commands/release';
 import { getProjectPreviousVersionsByOrder } from '../../src/utils/direcories-utils';
 import ProjectVersionData from '../../src/modules/project-version-data';
 
 jest.mock('fs');
+jest.mock('dayjs');
 jest.mock('../../src/utils/direcories-utils');
 
 describe('release', () => {
@@ -15,6 +17,11 @@ describe('release', () => {
   
     beforeEach(() => {
       jest.clearAllMocks();
+      (dayjs as any as jest.Mock).mockImplementation(() => {
+        return {
+            format: jest.fn().mockImplementation(() => 'timestamp')
+        }
+      })
     });
     
     it('should log an error and return if version is not semantic', () => {
@@ -30,6 +37,7 @@ describe('release', () => {
     test('should log an error if next version file is missing', () => {
         (fs.readFileSync as jest.Mock).mockImplementation(() => { throw new Error('File not found'); });
         const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        
         
         command.action(projectPath, version);
         
@@ -54,6 +62,7 @@ describe('release', () => {
                 serviceA:'1.0.0'
             },
             previousVersions: ['1.0.0'],
+            publishTimestamp: 'timestamp'
         };
         
         expect(fs.writeFileSync).toHaveBeenCalledWith(`/path/to/project/1.0.0.json`, JSON.stringify(expectedData));
@@ -72,6 +81,7 @@ describe('release', () => {
             changes: { serviceA: '1.0.0' },
             allMicroservices: { serviceA: '1.0.0' },
             previousVersions: [previousVersion],
+            publishTimestamp: 'timestamp'
         };
         
         (fs.readFileSync as jest.Mock).mockImplementation((filePath) => {
@@ -95,6 +105,7 @@ describe('release', () => {
                 serviceA: '1.1.0'
             },
             previousVersions: ['1.1.0', '1.0.0'],
+            publishTimestamp: 'timestamp'
         };
         
         expect(fs.writeFileSync).toHaveBeenCalledWith(`/path/to/project/1.1.0.json`, JSON.stringify(expectedData));
