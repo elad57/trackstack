@@ -22,7 +22,7 @@ const getMicroserviceVersionData = async (pathToMicroserviceVersionFile?: string
     
     if(pathToMicroserviceVersionFile) {
         const splittedPathToVersionFile: string[] = pathToMicroserviceVersionFile.split(/[\\/]/);
-        versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1];        
+        versionFileName = splittedPathToVersionFile[splittedPathToVersionFile.length - 1]; 
     }
 
     const getDataFromVersionFile: getDataVersionFileFunc = microserviceVersionFileToMicroServiceDataMap[versionFileName] || microserviceVersionFileToMicroServiceDataMap[getNoConstantNameVersionFileName(versionFileName)];

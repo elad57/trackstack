@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as dayjs from 'dayjs'
 import { Command } from 'commander';
+
 import CLICommand from '../modules/commands';
 import ProjectVersionData from '../modules/project-version-data'
 import { isSemanticVersion } from '../utils/string-utils'
@@ -20,7 +22,8 @@ const action = (projectPath: string, version: string): void => {
         projectVersion: version,
         changes: {},
         allMicroservices: {},
-        previousVersions:[]    
+        previousVersions:[],
+        publishTimestamp: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSZ').toString()    
     }
     
     const pathToNextVersionFile: string = path.join(projectPath, NEXT_VERSION_FILE);
