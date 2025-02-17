@@ -1,0 +1,5 @@
+init <project> - initalize the project folder. options: -p path
+get - print all versions. options: -d path of directory
+updateto <project> - write new microservice version. option -p path of version file -d path to project directory -npm search only package.json -mvn search only pom.xml -gem search only gemspec file
+release <project-path> <version> - write new project version
+details <project-path> <version> - get all details versions. -c only changes -a all services 
